@@ -43,9 +43,9 @@ const plugins = [
 const directoryPath = 'dist/img';
 const files = fs.readdirSync(directoryPath);
 
-files.forEach(function(filepath){
+files.forEach(function (filepath) {
 
-    if(filepath.endsWith(".svg")){
+    if (filepath.endsWith(".svg")) {
 
         filepath = path.resolve(__dirname, "..", directoryPath, filepath);
 

@@ -2,13 +2,13 @@
 
 var port = process.argv[2];
 
-if(!port){
+if (!port) {
 
-    if(/^win/.test(process.platform)){
+    if (/^win/.test(process.platform)) {
 
         port = 80;
     }
-    else{
+    else {
 
         port = 8080;
     }

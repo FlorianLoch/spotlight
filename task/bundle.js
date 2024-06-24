@@ -5,9 +5,9 @@ const image = process.argv[2] === "--image";
 //const template = process.argv[2] === "--template";
 const style = process.argv[2] === "--style";
 
-(function(){
+(function () {
 
-    if(image){
+    if (image) {
 
         // TODO provide custom filenames
 
@@ -32,9 +32,9 @@ const style = process.argv[2] === "--style";
 
         let tmp = "";
 
-        for(let key in compressed){
+        for (let key in compressed) {
 
-            if(compressed.hasOwnProperty(key)){
+            if (Object.prototype.hasOwnProperty.call(compressed, key)) {
 
                 tmp += ("@" + key + ": \"" + compressed[key] + "\";\n");
             }
@@ -53,7 +53,7 @@ const style = process.argv[2] === "--style";
 
     // ----------------------
 
-    if(style){
+    if (style) {
 
         writeFileSync("tmp/style.js",
 

@@ -143,9 +143,9 @@ let prefix_request, prefix_exit;
 
 addListener(document, "click", dispatch);
 
-export function init(){
+export function init() {
 
-    if(body){
+    if (body) {
 
         return;
     }
@@ -169,23 +169,23 @@ export function init(){
     addControl("close", close);
 
     body[prefix_request = "requestFullscreen"] ||
-    body[prefix_request = "msRequestFullscreen"] ||
-    body[prefix_request = "webkitRequestFullscreen"] ||
-    body[prefix_request = "mozRequestFullscreen"] ||
-    (prefix_request = "");
+        body[prefix_request = "msRequestFullscreen"] ||
+        body[prefix_request = "webkitRequestFullscreen"] ||
+        body[prefix_request = "mozRequestFullscreen"] ||
+        (prefix_request = "");
 
-    if(prefix_request){
+    if (prefix_request) {
 
         prefix_exit = (
 
             prefix_request.replace("request", "exit")
-                          .replace("mozRequest", "mozCancel")
-                          .replace("Request", "Exit")
+                .replace("mozRequest", "mozCancel")
+                .replace("Request", "Exit")
         );
 
         maximize = addControl("fullscreen", fullscreen);
     }
-    else{
+    else {
 
         controls.pop(); // => "fullscreen"
     }
@@ -222,13 +222,13 @@ export function init(){
     // click listener for the wrapper "track" is already covered
     //addListener(track, "click", menu);
 
-    addListener(button, "click", function(){
+    addListener(button, "click", function () {
 
-        if(options_click){
+        if (options_click) {
 
             options_click(current_slide, options);
         }
-        else if(options_href){
+        else if (options_href) {
 
             location.href = options_href;
         }
@@ -239,7 +239,7 @@ export function init(){
      * @returns {HTMLDivElement}
      */
 
-    function getOneByClass(classname){
+    function getOneByClass(classname) {
 
         //console.log("getOneByClass", classname);
 
@@ -253,7 +253,7 @@ export function init(){
  * @returns {HTMLDivElement}
  */
 
-export function addControl(classname, fn){
+export function addControl(classname, fn) {
 
     //console.log("addControl", classname, fn);
 
@@ -270,13 +270,13 @@ export function addControl(classname, fn){
  * @param {string} classname
  */
 
-export function removeControl(classname){
+export function removeControl(classname) {
 
     //console.log("dispatch", classname);
 
     const div = controls_dom[classname];
 
-    if(div){
+    if (div) {
 
         header.removeChild(div);
         controls_dom[classname] = null;
@@ -287,18 +287,18 @@ export function removeControl(classname){
  * @param {Event} event
  */
 
-function dispatch(event){
+function dispatch(event) {
 
     //console.log("dispatch");
 
-    if(is_sliding_up){
+    if (is_sliding_up) {
 
         return;
     }
 
     const target = /** @type {HTMLDivElement?} */ (event.target.closest(".spotlight"));
 
-    if(target){
+    if (target) {
 
         cancelEvent(event, true);
 
@@ -308,9 +308,9 @@ function dispatch(event){
 
         // determine current selected index
 
-        for(let i = 0; i < anchors.length; i++){
+        for (let i = 0; i < anchors.length; i++) {
 
-            if(anchors[i] === target){
+            if (anchors[i] === target) {
 
                 options_group = group && group.dataset;
                 init_gallery(i + 1);
@@ -326,13 +326,13 @@ function dispatch(event){
  * @param {number=} index
  */
 
-export function show(gallery, group, index){
+export function show(gallery, group, index) {
 
     //console.log("show", gallery, config);
 
     anchors = gallery;
 
-    if(group){
+    if (group) {
 
         options_group = group;
         options_onshow = group["onshow"];
@@ -348,13 +348,13 @@ export function show(gallery, group, index){
  * @param {number} index
  */
 
-function init_gallery(index){
+function init_gallery(index) {
 
     //console.log("init_gallery", index);
 
     slide_count = anchors.length;
 
-    if(slide_count){
+    if (slide_count) {
 
         body || init();
         options_onshow && options_onshow(index);
@@ -362,7 +362,7 @@ function init_gallery(index){
         const pane = panes[0];
         const parent = pane.parentNode;
 
-        for(let i = panes.length; i < slide_count; i++){
+        for (let i = panes.length; i < slide_count; i++) {
 
             const clone = pane.cloneNode(false);
 
@@ -371,7 +371,7 @@ function init_gallery(index){
             panes[i] = clone;
         }
 
-        if(!panel){
+        if (!panel) {
 
             body.appendChild(widget);
             update_widget_viewport();
@@ -391,13 +391,13 @@ function init_gallery(index){
  * @param {boolean|string|number=} is_default
  */
 
-function parse_option(key, is_default){
+function parse_option(key, is_default) {
 
     //console.log("parse_option", key, is_default);
 
     let val = options[key];
 
-    if(typeof val !== "undefined"){
+    if (typeof val !== "undefined") {
 
         val = "" + val;
 
@@ -411,7 +411,7 @@ function parse_option(key, is_default){
  * @param {Object} anchor
  */
 
-function apply_options(anchor){
+function apply_options(anchor) {
 
     //console.log("apply_options", anchor);
 
@@ -440,38 +440,38 @@ function apply_options(anchor){
 
     // determine controls
 
-    if(control){
+    if (control) {
 
         const whitelist = (
 
             typeof control === "string" ?
 
                 control.split(",")
-            :
+                :
                 control
         );
 
         // prepare to false when using whitelist
 
-        for(let i = 0; i < controls.length; i++){
+        for (let i = 0; i < controls.length; i++) {
 
             options[controls[i]] = false;
         }
 
         // apply whitelist
 
-        for(let i = 0; i < whitelist.length; i++){
+        for (let i = 0; i < whitelist.length; i++) {
 
             const option = whitelist[i].trim();
 
             // handle shorthand "zoom"
 
-            if(option === "zoom"){
+            if (option === "zoom") {
 
                 options["zoom-in"] =
-                options["zoom-out"] = true;
+                    options["zoom-out"] = true;
             }
-            else{
+            else {
 
                 options[option] = true;
             }
@@ -485,36 +485,36 @@ function apply_options(anchor){
     animation_scale = animation_fade = animation_slide = !animation;
     animation_custom = false;
 
-    if(animation){
+    if (animation) {
 
         const whitelist = (
 
             typeof animation === "string" ?
 
                 animation.split(",")
-            :
+                :
                 animation
         );
 
         // apply whitelist
 
-        for(let i = 0; i < whitelist.length; i++){
+        for (let i = 0; i < whitelist.length; i++) {
 
             const option = whitelist[i].trim();
 
-            if(option === "scale"){
+            if (option === "scale") {
 
                 animation_scale = true;
             }
-            else if(option === "fade"){
+            else if (option === "fade") {
 
                 animation_fade = true;
             }
-            else if(option === "slide"){
+            else if (option === "slide") {
 
                 animation_slide = true;
             }
-            else if(option){
+            else if (option) {
 
                 animation_custom = option;
             }
@@ -528,15 +528,15 @@ function apply_options(anchor){
  * @param {boolean=} prepare
  */
 
-function prepare_animation(prepare){
+function prepare_animation(prepare) {
 
     //console.log("prepare_animation", prepare);
 
-    if(prepare){
+    if (prepare) {
 
         prepareStyle(media, prepare_animation);
     }
-    else{
+    else {
 
         toggleAnimation(slider, animation_slide);
         setStyle(media, "opacity", animation_fade ? 0 : 1);
@@ -549,7 +549,7 @@ function prepare_animation(prepare){
  * @param {number} index
  */
 
-function init_slide(index){
+function init_slide(index) {
 
     //console.log("init_slide", index);
 
@@ -557,11 +557,11 @@ function init_slide(index){
     media = /** @type {Image|HTMLVideoElement|HTMLElement} */ (panel.firstChild);
     current_slide = index;
 
-    if(media){
+    if (media) {
 
         disable_autoresizer();
 
-        if(options_fit){
+        if (options_fit) {
 
             addClass(media, options_fit);
         }
@@ -576,19 +576,19 @@ function init_slide(index){
         gallery_next && (media_next.src = gallery_next);
         options_autoslide && animate_bar(playing);
     }
-    else{
+    else {
 
         const type = gallery.media;
         const options_spinner = parse_option("spinner", true);
 
-        if(type === "video"){
+        if (type === "video") {
 
             toggle_spinner(options_spinner, true);
             media = /** @type {HTMLVideoElement} */ (createElement("video"));
 
-            media.onloadedmetadata = function(){
+            media.onloadedmetadata = function () {
 
-                if(media === this){
+                if (media === this) {
 
                     media.onerror = null;
                     media.width = media.videoWidth;
@@ -614,16 +614,16 @@ function init_slide(index){
 
             panel.appendChild(media);
         }
-        else if(type === "node"){
+        else if (type === "node") {
 
             media = gallery.src;
 
-            if(typeof media === "string"){
+            if (typeof media === "string") {
 
                 media = /** @type {HTMLElement} */ (document.querySelector(media));
             }
 
-            if(media){
+            if (media) {
 
                 media._root || (media._root = media.parentNode);
                 media._style || (media._style = media.getAttribute("style"));
@@ -636,14 +636,14 @@ function init_slide(index){
 
             return;
         }
-        else{
+        else {
 
             toggle_spinner(options_spinner, true);
             media = /** @type {HTMLVideoElement|Image} */ (createElement("img"));
 
-            media.onload = function(){
+            media.onload = function () {
 
-                if(media === this){
+                if (media === this) {
 
                     media.onerror = null;
                     toggle_spinner(options_spinner);
@@ -657,13 +657,13 @@ function init_slide(index){
             panel.appendChild(media);
         }
 
-        if(media){
+        if (media) {
 
             options_spinner || setStyle(media, "visibility", "visible");
 
-            media.onerror = function(){
+            media.onerror = function () {
 
-                if(media === this){
+                if (media === this) {
 
                     checkout(media);
                     addClass(spinner, "error");
@@ -680,7 +680,7 @@ function init_slide(index){
  * @param {boolean=} is_on
  */
 
-function toggle_spinner(options_spinner, is_on){
+function toggle_spinner(options_spinner, is_on) {
 
     //console.log("toggle_spinner", options_spinner, is_on);
 
@@ -691,7 +691,7 @@ function toggle_spinner(options_spinner, is_on){
  * @returns {boolean}
  */
 
-function has_fullscreen(){
+function has_fullscreen() {
 
     //console.log("has_fullscreen");
 
@@ -704,14 +704,14 @@ function has_fullscreen(){
     );
 }
 
-function resize_listener(){
+function resize_listener() {
 
     //console.log("resize_listener");
 
     update_widget_viewport()
     media && update_media_viewport();
 
-    if(prefix_request){
+    if (prefix_request) {
 
         const is_fullscreen = has_fullscreen();
 
@@ -727,12 +727,12 @@ function resize_listener(){
     //update_scroll();
 }
 
-function detect_fullscreen(){
+function detect_fullscreen() {
 
     toggleDisplay(maximize, (screen.availHeight - window.innerHeight) > 0);
 }
 
-function update_widget_viewport(){
+function update_widget_viewport() {
 
     //console.log("update_widget_viewport");
 
@@ -740,7 +740,7 @@ function update_widget_viewport(){
     viewport_h = widget.clientHeight;
 }
 
-function update_media_viewport(){
+function update_media_viewport() {
 
     //console.log("update_media_viewport");
 
@@ -758,7 +758,7 @@ function update_media_viewport(){
  * @param {number=} force_scale
  */
 
-function update_scroll(force_scale){
+function update_scroll(force_scale) {
 
     //console.log("update_scroll", force_scale);
 
@@ -770,7 +770,7 @@ function update_scroll(force_scale){
  * @param {number=} y
  */
 
-function update_panel(x, y){
+function update_panel(x, y) {
 
     //console.log("update_panel", x, y);
 
@@ -783,18 +783,18 @@ function update_panel(x, y){
  * @param {number=} offset
  */
 
-function update_slider(index, prepare, offset){
+function update_slider(index, prepare, offset) {
 
     //console.log("update_slider", prepare, offset);
 
-    if(prepare){
+    if (prepare) {
 
-        prepareStyle(slider, function(){
+        prepareStyle(slider, function () {
 
             update_slider(index, false, offset);
         });
     }
-    else{
+    else {
 
         setStyle(slider, "transform", "translateX(" + (-index * 100 + (offset || 0)) + "%)");
     }
@@ -804,7 +804,7 @@ function update_slider(index, prepare, offset){
  * @param {boolean=} install
  */
 
-function toggle_listener(install){
+function toggle_listener(install) {
 
     //console.log("toggle_listener", install);
 
@@ -822,7 +822,7 @@ function history_listener(event) {
 
     //console.log("history_listener");
 
-    if(panel && /*event.state &&*/ event.state["spl"]) {
+    if (panel && /*event.state &&*/ event.state["spl"]) {
 
         close(true);
     }
@@ -832,15 +832,15 @@ function history_listener(event) {
  * @param {KeyboardEvent} event
  */
 
-function key_listener(event){
+function key_listener(event) {
 
     //console.log("key_listener");
 
-    if(panel){
+    if (panel) {
 
         const zoom_enabled = options["zoom-in"] !== false;
 
-        switch(event.keyCode){
+        switch (event.keyCode) {
 
             case keycodes.BACKSPACE:
                 zoom_enabled && autofit();
@@ -886,20 +886,20 @@ function key_listener(event){
  * @param {WheelEvent} event
  */
 
-function wheel_listener(event){
+function wheel_listener(event) {
 
     //console.log("wheel_listener");
 
-    if(panel && (options["zoom-in"] !== false)){
+    if (panel && (options["zoom-in"] !== false)) {
 
         let delta = event["deltaY"];
         delta = (delta < 0 ? 1 : delta ? -1 : 0) * 0.5;
 
-        if(delta < 0){
+        if (delta < 0) {
 
             zoom_out(event, event.clientX, event.clientY);
         }
-        else if(delta > 0){
+        else if (delta > 0) {
 
             zoom_in(event, event.clientX, event.clientY);
         }
@@ -911,13 +911,13 @@ function wheel_listener(event){
  * @param {boolean=} _skip_animation
  */
 
-export function play(init, _skip_animation){
+export function play(init, _skip_animation) {
 
     //console.log("play", init);
 
     const state = (typeof init === "boolean" ? init : !playing);
 
-    if(state === !playing){
+    if (state === !playing) {
 
         playing = playing ? clearTimeout(playing) : 1;
         toggleClass(player, "on", playing);
@@ -929,40 +929,40 @@ export function play(init, _skip_animation){
  * @param {?=} start
  */
 
-function animate_bar(start){
+function animate_bar(start) {
 
     //console.log("animate_bar", start);
 
-    if(options_progress){
+    if (options_progress) {
 
-        prepareStyle(progress, function(){
+        prepareStyle(progress, function () {
 
             setStyle(progress, "transition-duration", "");
             setStyle(progress, "transform", "");
         });
 
-        if(start){
+        if (start) {
 
             setStyle(progress, "transition-duration", delay + "s");
             setStyle(progress, "transform", "translateX(0)");
         }
     }
 
-    if(start){
+    if (start) {
 
         playing = setTimeout(next, delay * 1000);
     }
 }
 
-function autohide(){
+function autohide() {
 
     //console.log("autohide");
 
-    if(options_autohide) {
+    if (options_autohide) {
 
         hide_cooldown = Date.now() + 2950;
 
-        if(!hide){
+        if (!hide) {
 
             addClass(widget, "menu");
             schedule(3000);
@@ -974,20 +974,20 @@ function autohide(){
  * @param {number} cooldown
  */
 
-function schedule(cooldown){
+function schedule(cooldown) {
 
     //console.log("schedule", cooldown);
 
-    hide = setTimeout(function(){
+    hide = setTimeout(function () {
 
         const now = Date.now();
 
-        if(now >= hide_cooldown){
+        if (now >= hide_cooldown) {
 
             removeClass(widget, "menu");
             hide = 0;
         }
-        else{
+        else {
 
             schedule(hide_cooldown - now);
         }
@@ -999,21 +999,21 @@ function schedule(cooldown){
  * @param {boolean=} state
  */
 
-export function menu(state){
+export function menu(state) {
 
     //console.log("menu");
 
-    if(typeof state === "boolean"){
+    if (typeof state === "boolean") {
 
         hide = state ? hide : 0;
     }
 
-    if(hide){
+    if (hide) {
 
         hide = clearTimeout(hide);
         removeClass(widget, "menu");
     }
-    else{
+    else {
 
         autohide();
     }
@@ -1023,7 +1023,7 @@ export function menu(state){
  * @param {TouchEvent|MouseEvent} e
  */
 
-function start(e){
+function start(e) {
 
     //console.log("start");
 
@@ -1038,7 +1038,7 @@ function start(e){
     let touches = e.touches;
     prev_touches = touches;
 
-    if(touches && (touches = touches[0])){
+    if (touches && (touches = touches[0])) {
 
         touch = touches;
     }
@@ -1054,7 +1054,7 @@ function start(e){
  * @param {TouchEvent|MouseEvent} e
  */
 
-function end(e){
+function end(e) {
 
     //console.log("end");
 
@@ -1062,32 +1062,32 @@ function end(e){
 
     prev_touches = null;
 
-    if(is_down){
+    if (is_down) {
 
-        if(!dragged){
+        if (!dragged) {
 
             menu();
         }
-        else{
+        else {
 
-            if(slidable && dragged){
+            if (slidable && dragged) {
 
                 const has_next = (x < -(viewport_w / 7)) && ((current_slide < slide_count) || options_infinite);
                 const has_prev = has_next || (x > (viewport_w / 7)) && ((current_slide > 1) || options_infinite);
 
-                if(has_next || has_prev){
+                if (has_next || has_prev) {
 
                     update_slider(current_slide - 1, /* prepare? */ true, x / viewport_w * 100);
 
                     (has_next && next()) ||
-                    (has_prev && prev());
+                        (has_prev && prev());
                 }
 
-                if(is_sliding_up && y < -(viewport_h / 4)){
+                if (is_sliding_up && y < -(viewport_h / 4)) {
 
                     close();
                 }
-                else{
+                else {
 
                     x = 0;
                     y = 0;
@@ -1108,7 +1108,7 @@ function end(e){
  * @returns {number}
  */
 
-function distance(touches){
+function distance(touches) {
 
     return Math.sqrt(
         Math.pow(touches[0].clientX - touches[1].clientX, 2)
@@ -1119,7 +1119,7 @@ function distance(touches){
 /**
  * @param {TouchList} touches
  */
-function center_of(touches){
+function center_of(touches) {
 
     return [
         (touches[0].clientX + touches[1].clientX) * 0.5,
@@ -1131,8 +1131,8 @@ function center_of(touches){
  * @param {TouchList=} touches
  */
 
-function scale_touches(touches){
-    if(options["zoom-in"] !== false && touches && touches.length === 2 && prev_touches && prev_touches.length === 2){
+function scale_touches(touches) {
+    if (options["zoom-in"] !== false && touches && touches.length === 2 && prev_touches && prev_touches.length === 2) {
 
         const relative_scale = distance(touches) / distance(prev_touches);
         const center = center_of(touches);
@@ -1147,63 +1147,63 @@ function scale_touches(touches){
  * @param {TouchEvent|MouseEvent} e
  */
 
-function move(e){
+function move(e) {
 
     //console.log("move");
 
     cancelEvent(e);
 
-    if(is_down){
+    if (is_down) {
 
         let touches = scale_touches(e.touches);
 
-        if(touches){
+        if (touches) {
 
             e = touches;
         }
 
-        if(!dragged){
+        if (!dragged) {
 
             const dx = startX - e.pageX;
             const dy = startY - e.pageY;
             is_sliding_up = slidable && dy > Math.abs(dx) * 1.15;
         }
 
-        if(is_sliding_up){
+        if (is_sliding_up) {
 
             // handle y-axis in y-slide mode
             y -= startY - (startY = e.pageY);
         }
-        else{
+        else {
 
             // handle x-axis in x-slide mode and in drag mode
             x -= startX - (startX = e.pageX);
         }
 
-        if(!slidable){
+        if (!slidable) {
 
             let diff = (media_w * scale - viewport_w) / 2;
-            if(x > diff){
+            if (x > diff) {
 
                 x = diff;
             }
-            else if(x < -diff){
+            else if (x < -diff) {
 
                 x = -diff
             }
 
             // handle y-axis in drag mode
 
-            if((media_h * scale) > viewport_h){
+            if ((media_h * scale) > viewport_h) {
 
                 diff = (media_h * scale - viewport_h) / 2;
                 y -= startY - (startY = e.pageY);
 
-                if(y > diff){
+                if (y > diff) {
 
                     y = diff;
                 }
-                else if(y < -diff){
+                else if (y < -diff) {
 
                     y = -diff;
                 }
@@ -1214,7 +1214,7 @@ function move(e){
 
         update_panel(x, y);
     }
-    else{
+    else {
 
         autohide();
     }
@@ -1224,20 +1224,20 @@ function move(e){
  * @param {Event|boolean=} init
  */
 
-export function fullscreen(init){
+export function fullscreen(init) {
 
     //console.log("fullscreen", init);
 
     const is_fullscreen = has_fullscreen();
 
-    if((typeof init !== "boolean") || (init !== !!is_fullscreen)){
+    if ((typeof init !== "boolean") || (init !== !!is_fullscreen)) {
 
-        if(is_fullscreen){
+        if (is_fullscreen) {
 
             document[prefix_exit]();
             //removeClass(maximize, "on");
         }
-        else{
+        else {
 
             widget[prefix_request]();
             //addClass(maximize, "on");
@@ -1249,18 +1249,18 @@ export function fullscreen(init){
  * @param {Event|string=} theme
  */
 
-export function theme(theme){
+export function theme(theme) {
 
     //console.log("theme", theme);
 
-    if(typeof theme !== "string"){
+    if (typeof theme !== "string") {
 
         // toggle:
 
         theme = toggle_theme ? "" : options_theme || "white";
     }
 
-    if(toggle_theme !== theme){
+    if (toggle_theme !== theme) {
 
         // set:
 
@@ -1274,11 +1274,11 @@ export function theme(theme){
  * @param {Event|boolean=} init
  */
 
-export function autofit(init){
+export function autofit(init) {
 
     //console.log("autofit", init);
 
-    if(typeof init === "boolean"){
+    if (typeof init === "boolean") {
 
         toggle_autofit = !init;
     }
@@ -1305,7 +1305,7 @@ export function autofit(init){
  * @param {boolean=} animated
  */
 
-function centered_zoom(relative, cx, cy, animated){
+function centered_zoom(relative, cx, cy, animated) {
 
     let value = scale * relative;
 
@@ -1313,7 +1313,7 @@ function centered_zoom(relative, cx, cy, animated){
     toggleAnimation(media, animated);
     disable_autoresizer();
 
-    if(value <= 1){
+    if (value <= 1) {
 
         x = y = 0;
         update_panel(x, y);
@@ -1327,7 +1327,7 @@ function centered_zoom(relative, cx, cy, animated){
         return;
     }
 
-    if(value > 50){
+    if (value > 50) {
 
         // if(options_fit){
         //
@@ -1337,13 +1337,13 @@ function centered_zoom(relative, cx, cy, animated){
         return;
     }
 
-    if(cy){
+    if (cy) {
 
         const half_w = viewport_w / 2, half_h = viewport_h / 2;
         x = cx - (cx - x - half_w) * relative - half_w;
         y = cy - (cy - y - half_h) * relative - half_h;
     }
-    else{
+    else {
 
         x *= relative;
         y *= relative;
@@ -1359,7 +1359,7 @@ function centered_zoom(relative, cx, cy, animated){
  * @param {number=} cy
  */
 
-function zoom_in(e, cx, cy){
+function zoom_in(e, cx, cy) {
 
     //console.log("zoom_in");
 
@@ -1373,7 +1373,7 @@ function zoom_in(e, cx, cy){
  * @param {number=} cy
  */
 
-function zoom_out(e, cx, cy){
+function zoom_out(e, cx, cy) {
 
     //console.log("zoom_out");
 
@@ -1385,7 +1385,7 @@ function zoom_out(e, cx, cy){
  * @param {number=} factor
  */
 
-export function zoom(factor){
+export function zoom(factor) {
 
     //console.log("zoom", factor);
 
@@ -1394,7 +1394,7 @@ export function zoom(factor){
     update_scroll();
 }
 
-export function info(){
+export function info() {
 
     //console.log("info");
 
@@ -1403,13 +1403,13 @@ export function info(){
 
 }
 
-function disable_autoresizer(){
+function disable_autoresizer() {
 
     //console.log("disable_autoresizer");
 
     //update_media_dimension();
 
-    if(toggle_autofit){
+    if (toggle_autofit) {
 
         // removeClass(media, "autofit");
         // toggle_autofit = false;
@@ -1418,7 +1418,7 @@ function disable_autoresizer(){
     }
 }
 
-function show_gallery(){
+function show_gallery() {
 
     //console.log("show_gallery");
 
@@ -1437,7 +1437,7 @@ function show_gallery(){
     options_autoslide && play(true, true);
 }
 
-export function download(){
+export function download() {
 
     //console.log("download", media);
 
@@ -1448,11 +1448,11 @@ export function download(){
  * @param {boolean=} hashchange
  */
 
-export function close(hashchange){
+export function close(hashchange) {
 
     //console.log("close", hashchange);
 
-    setTimeout(function(){
+    setTimeout(function () {
 
         body.removeChild(widget);
         panel = media = gallery = options = options_group = anchors = options_onshow = options_onchange = options_onclose = options_click = null;
@@ -1483,17 +1483,17 @@ export function close(hashchange){
  * @param {Image|HTMLVideoElement|HTMLElement} media
  */
 
-function checkout(media){
+function checkout(media) {
 
     //console.log("checkout");
 
-    if(media._root){
+    if (media._root) {
 
         media.setAttribute("style", media._style || "");
         media._root.appendChild(media);
         media._root = media._style = null;
     }
-    else{
+    else {
 
         const parent = media.parentNode;
         parent && parent.removeChild(media);
@@ -1506,19 +1506,19 @@ function checkout(media){
  * @param {Event=} e
  */
 
-export function prev(e){
+export function prev(e) {
 
     //console.log("prev");
 
     e && autohide();
 
-    if(slide_count > 1){
+    if (slide_count > 1) {
 
-        if(current_slide > 1){
+        if (current_slide > 1) {
 
             return goto(current_slide - 1);
         }
-        else if(options_infinite){
+        else if (options_infinite) {
 
             update_slider(slide_count, true);
 
@@ -1531,25 +1531,25 @@ export function prev(e){
  * @param {Event=} e
  */
 
-export function next(e){
+export function next(e) {
 
     //console.log("next");
 
     e && autohide();
 
-    if(slide_count > 1){
+    if (slide_count > 1) {
 
-        if(current_slide < slide_count){
+        if (current_slide < slide_count) {
 
             return goto(current_slide + 1);
         }
-        else if(options_infinite){
+        else if (options_infinite) {
 
             update_slider(-1, true);
 
             return goto(1);
         }
-        else if(playing){
+        else if (playing) {
 
             play();
         }
@@ -1561,18 +1561,18 @@ export function next(e){
  * @returns {boolean|undefined}
  */
 
-export function goto(slide){
+export function goto(slide) {
 
     //console.log("goto", slide);
 
-    if(slide !== current_slide){
+    if (slide !== current_slide) {
 
-        if(playing){
+        if (playing) {
 
             clearTimeout(playing);
             animate_bar();
         }
-        else{
+        else {
 
             autohide();
         }
@@ -1593,7 +1593,7 @@ export function goto(slide){
  * @param {boolean} direction
  */
 
-function prepare(direction){
+function prepare(direction) {
 
     //console.log("prepare", direction);
 
@@ -1604,7 +1604,7 @@ function prepare(direction){
     const speed = connection && connection["downlink"];
     let size = Math.max(viewport_h, viewport_w) * dpr;
 
-    if(speed && ((speed * 1200) < size)){
+    if (speed && ((speed * 1200) < size)) {
 
         size = speed * 1200;
     }
@@ -1624,14 +1624,14 @@ function prepare(direction){
 
     gallery_next && (media_next.src = gallery_next = "");
 
-    if(options_preload && direction){
+    if (options_preload && direction) {
 
-        if((anchor = anchors[current_slide])){
+        if ((anchor = anchors[current_slide])) {
 
             const options_next = anchor.dataset || anchor;
             const next_media = options_next["media"];
 
-            if(!next_media || (next_media === "image")){
+            if (!next_media || (next_media === "image")) {
 
                 gallery_next = parse_src(anchor, size, options_next, next_media);
             }
@@ -1640,7 +1640,7 @@ function prepare(direction){
 
     // apply controls
 
-    for(let i = 0; i < controls.length; i++){
+    for (let i = 0; i < controls.length; i++) {
 
         const option = controls[i];
 
@@ -1654,7 +1654,7 @@ function prepare(direction){
  * @param {boolean} direction
  */
 
-function setup_page(direction){
+function setup_page(direction) {
 
     //console.log("setup_page", direction);
 
@@ -1662,21 +1662,21 @@ function setup_page(direction){
     y = 0;
     scale = 1;
 
-    if(media){
+    if (media) {
 
         // Note: the onerror callback was removed when the image was fully loaded (also for video)
 
-        if(media.onerror){
+        if (media.onerror) {
 
             checkout(media);
         }
-        else{
+        else {
 
             let ref = media;
 
-            setTimeout(function(){
+            setTimeout(function () {
 
-                if(ref && (media !== ref)){
+                if (ref && (media !== ref)) {
 
                     checkout(ref);
                     ref = null;
@@ -1705,7 +1705,7 @@ function setup_page(direction){
     const str_button = parse_option("button");
     const has_content = str_title || str_description || str_button;
 
-    if(has_content){
+    if (has_content) {
 
         str_title && setText(title, str_title);
         str_description && setText(description, str_description);

@@ -12,54 +12,54 @@ const tpl_video = /** @type {HTMLVideoElement} */ (createElement("video"));
  * @returns {string}
  */
 
-export default function(anchor, size, options, media){
+export default function (anchor, size, options, media) {
 
     let src, diff;
 
-    if(media !== "node"){
+    if (media !== "node") {
 
-        const keys = Object.keys(/** @type {!Object} */ (options));
+        const keys = Object.keys(/** @type {!Object} */(options));
 
-        for(let x = 0, key; x < keys.length; x++){
+        for (let x = 0, key; x < keys.length; x++) {
 
             key = keys[x];
 
-            if((key.length > 3) && (key.indexOf("src") === 0)){
+            if ((key.length > 3) && (key.indexOf("src") === 0)) {
 
-                if(media === "video"){
+                if (media === "video") {
 
                     const cache = video_support[key];
 
-                    if(cache){
+                    if (cache) {
 
-                        if(cache > 0){
+                        if (cache > 0) {
 
                             src = options[key];
                             break;
                         }
                     }
-                    else if(tpl_video.canPlayType("video/" + key.substring(3).replace("-", "").toLowerCase())){
+                    else if (tpl_video.canPlayType("video/" + key.substring(3).replace("-", "").toLowerCase())) {
 
                         video_support[key] = 1;
                         src = options[key];
                         break;
                     }
-                    else{
+                    else {
 
                         video_support[key] = -1;
                     }
                 }
-                else{
+                else {
 
                     // Image Media:
 
                     const res = parseInt(key.substring(4), 10);
 
-                    if(res){
+                    if (res) {
 
                         const abs = Math.abs(size - res);
 
-                        if(!diff || (abs < diff)){
+                        if (!diff || (abs < diff)) {
 
                             diff = abs;
                             src = options[key];

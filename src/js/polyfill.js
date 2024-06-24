@@ -1,12 +1,12 @@
 Object.assign || (Object.assign =
 
-    function(target, source){
+    function (target, source) {
 
         //console.log("assign", target, source);
 
         const keys = Object.keys(/** @type {!Object} */(source));
 
-        for(let i = 0, key; i < keys.length; i++){
+        for (let i = 0, key; i < keys.length; i++) {
 
             key = keys[i];
             target[key] = /*"" +*/ source[key];
@@ -16,7 +16,7 @@ Object.assign || (Object.assign =
     }
 );
 
-Element.prototype.closest || (Element.prototype.closest = function(classname){
+Element.prototype.closest || (Element.prototype.closest = function (classname) {
 
     //console.log("closest", classname);
 
@@ -24,9 +24,9 @@ Element.prototype.closest || (Element.prototype.closest = function(classname){
 
     let node = this;
 
-    while(node && (node.nodeType === 1)){
+    while (node && (node.nodeType === 1)) {
 
-        if(node.classList.contains(classname)){
+        if (node.classList.contains(classname)) {
 
             return /** @type {Element|null} */ (node);
         }

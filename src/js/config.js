@@ -39,7 +39,7 @@ export const keycodes = {
     LEFT: 37,
     RIGHT: 39,
     UP: 38,
-    NUMBLOCK_PLUS : 107,
+    NUMBLOCK_PLUS: 107,
     PLUS: 187,
     DOWN: 40,
     NUMBLOCK_MINUS: 109,

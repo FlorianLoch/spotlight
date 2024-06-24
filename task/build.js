@@ -37,13 +37,13 @@ const bundle = process.argv[2] === "--bundle";
 
 // https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/CommandLineRunner.java#L130-L655
 
-const parameter = (function(opt){
+const parameter = (function (opt) {
 
     let parameter = '';
 
-    for(let index in opt){
+    for (let index in opt) {
 
-        if(opt.hasOwnProperty(index)){
+        if (Object.prototype.hasOwnProperty.call(opt, index)) {
 
             parameter += ' --' + index + '=' + opt[index];
         }
@@ -89,11 +89,11 @@ const parameter = (function(opt){
 
 exec((/^win/.test(process.platform) ?
 
-        "\"node_modules/google-closure-compiler-windows/compiler.exe\""
+    "\"node_modules/google-closure-compiler-windows/compiler.exe\""
     :
-        "npx google-closure-compiler"
+    "npx google-closure-compiler"
 
-) + parameter + (bundle ? " --js='tmp/**.js'" : "") + " --js='src/js/**.js' --js_output_file='" + (bundle ? "dist/spotlight.bundle.js" : "dist/js/spotlight.min.js") + "' && exit 0", function(){
+) + parameter + (bundle ? " --js='tmp/**.js'" : "") + " --js='src/js/**.js' --js_output_file='" + (bundle ? "dist/spotlight.bundle.js" : "dist/js/spotlight.min.js") + "' && exit 0", function () {
 
     let build = fs.readFileSync((bundle ? "dist/spotlight.bundle.js" : "dist/js/spotlight.min.js"));
     let preserve = fs.readFileSync("src/js/spotlight.js", "utf8");
@@ -107,17 +107,17 @@ exec((/^win/.test(process.platform) ?
     console.log("Build Complete.");
 });
 
-function exec(prompt, callback){
+function exec(prompt, callback) {
 
-    const child = child_process.exec(prompt, function(err, stdout, stderr){
+    const child = child_process.exec(prompt, function (err) {
 
-        if(err){
+        if (err) {
 
             console.error(err);
         }
-        else{
+        else {
 
-            if(callback){
+            if (callback) {
 
                 callback();
             }
