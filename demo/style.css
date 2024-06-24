@@ -35,6 +35,9 @@ button{
     margin: 1vmin 1vmin;
     content-visibility: auto;
 }
+.long .spotlight img {
+    width: auto;
+}
 .image{
     display: inline-block;
     height: 20vw;
