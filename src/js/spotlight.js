@@ -1724,7 +1724,8 @@ function setup_page(direction) {
 
     options_autohide || addClass(widget, "menu");
 
-    toggleVisibility(footer, footer_visible && has_content);
+    footer_visible = has_content;
+    toggleVisibility(footer, footer_visible);
     toggleVisibility(page_prev, options_infinite || (current_slide > 1));
     toggleVisibility(page_next, options_infinite || (current_slide < slide_count));
     setText(page, slide_count > 1 ? current_slide + " / " + slide_count : "");
