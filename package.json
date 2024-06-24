@@ -38,7 +38,7 @@
     "copy": "cpx \"src/img/*.*\" dist/img/",
     "clean": "if exist dist rmdir dist /s /q && mkdir dist && if exist dist rmdir tmp /s /q && mkdir tmp",
     "build:css": "lessc src/css/spotlight.less src/css/spotlight.css",
-    "build:css:bundle": "node task/bundle --image && lessc --autoprefix=\">=1%\" --csswring=\"--sourcemap --preserve-hacks\" --clean-css=\"--s1 --advanced --rebase\" tmp/bundle.less dist/css/spotlight.min.css && csso dist/css/spotlight.min.css --output dist/css/spotlight.min.css",
+    "build:css:bundle": "node task/bundle --image && lessc --autoprefix=\">=1%\" --clean-css=\"--s1 --advanced --rebase\" tmp/bundle.less dist/css/spotlight.min.css && csso dist/css/spotlight.min.css --output dist/css/spotlight.min.css",
     "build:js": "node task/build",
     "build:bundle": "node task/build --bundle",
     "build:svg": "node task/svgo",
@@ -66,7 +66,6 @@
     "less": "^4.1.1",
     "less-plugin-autoprefix": "^2.0.0",
     "less-plugin-clean-css": "^1.5.1",
-    "less-plugin-csswring": "^0.0.1",
     "svgo": "^3.3.2",
     "web-servo": "^0.5.1"
   }

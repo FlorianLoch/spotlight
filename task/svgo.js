@@ -26,7 +26,7 @@ const plugins = [
     'removeNonInheritableGroupAttrs',
     'removeUselessStrokeAndFill',
     'removeUnusedNS',
-    'cleanupIDs',
+    'cleanupIds',
     'cleanupNumericValues',
     'moveElemsAttrsToGroup',
     'moveGroupAttrsToElems',
