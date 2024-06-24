@@ -1043,7 +1043,7 @@ function start(e) {
         touch = touches;
     }
 
-    slidable = /* !toggle_autofit && */ (media_w * scale) <= viewport_w;
+    slidable = /* !toggle_autofit && */ (media_w * scale) <= viewport_w && (media_h * scale) <= viewport_h;
     startX = touch.pageX;
     startY = touch.pageY;
 
@@ -1174,15 +1174,20 @@ function move(e) {
             // handle y-axis in y-slide mode
             y -= startY - (startY = e.pageY);
         }
-        else {
+        else if (slidable) {
 
-            // handle x-axis in x-slide mode and in drag mode
+            // handle x-axis in x-slide mode
             x -= startX - (startX = e.pageX);
         }
+        else {
 
-        if (!slidable) {
+            // handle x-axis in drag mode
 
-            let diff = (media_w * scale - viewport_w) / 2;
+            let sign = (media_w * scale - viewport_w) / 2;
+            let diff = Math.abs(sign);
+            if (sign > 0) {
+                x -= startX - (startX = e.pageX);
+            }
             if (x > diff) {
 
                 x = diff;
@@ -1194,19 +1199,18 @@ function move(e) {
 
             // handle y-axis in drag mode
 
-            if ((media_h * scale) > viewport_h) {
-
-                diff = (media_h * scale - viewport_h) / 2;
+            sign = (media_h * scale - viewport_h) / 2;
+            diff = Math.abs(sign);
+            if (sign > 0) {
                 y -= startY - (startY = e.pageY);
+            }
+            if (y > diff) {
 
-                if (y > diff) {
+                y = diff;
+            }
+            else if (y < -diff) {
 
-                    y = diff;
-                }
-                else if (y < -diff) {
-
-                    y = -diff;
-                }
+                y = -diff;
             }
         }
 
