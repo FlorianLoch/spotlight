@@ -4,6 +4,7 @@
  * Author: Thomas Wilkerling
  * Licence: Apache-2.0
  * https://github.com/nextapps-de/spotlight
+ * THIS FILE HAS BEEN ADJUSTED AFTER FORKING THE PROJECT
  */
 
 import {
@@ -26,6 +27,9 @@ import {
     downloadImage
 
 } from "./helper.js";
+
+// Have vite embed the CSS directly into the JS bundle
+import "../css/spotlight.scss";
 
 import { controls, controls_default, keycodes } from "./config.js";
 import widget from "./template.js";
@@ -288,7 +292,6 @@ export function removeControl(classname) {
  */
 
 function dispatch(event) {
-
     //console.log("dispatch");
 
     if (is_sliding_up) {

@@ -1,4 +1,17 @@
-@import "images.less";
+$preloader: url("../img/preloader.svg?inline");
+$maximize: url("../img/maximize.svg?inline");
+$minimize: url("../img/minimize.svg?inline");
+$arrow: url("../img/arrow.svg?inline");
+$close: url("../img/close.svg?inline");
+$zoomin: url("../img/zoom-in.svg?inline");
+$zoomout: url("../img/zoom-out.svg?inline");
+$autofit: url("../img/autofit.svg?inline");
+$theme: url("../img/theme.svg?inline");
+$play: url("../img/play.svg?inline");
+$pause: url("../img/pause.svg?inline");
+$download: url("../img/download.svg?inline");
+$error: url("../img/error.svg?inline");
+$info: url("../img/info.svg?inline");
 
 #spotlight {
   & {
@@ -27,16 +40,14 @@
   }
 
   &.show {
-    & {
-      opacity: 1;
-      transition: none;
-      pointer-events: auto;
+    & {opacity: 1;transition: none;pointer-events: auto;
     }
     //.spl-scene,
     //.spl-pane {
     //  will-change: transform;
     //}
   }
+
   &.white {
     & {
       color: #212529;
@@ -95,12 +106,12 @@
   opacity: 0;
 }
 .spl-spinner.spin{
-  background-image: url(@preloader);
+  background-image: $preloader;
   transition: opacity 0.2s linear 0.25s;
   opacity: 1;
 }
 .spl-spinner.error{
-  background-image: url(@error);
+  background-image: $error;
   background-size: 128px;
   transition: none;
   opacity: 0.5;
@@ -126,7 +137,7 @@
   border: 0;
   transform: translate(-50%, -50%) scale(1);
   transition: transform 0.65s cubic-bezier(0.3, 1, 0.3, 1),
-              opacity 0.65s ease;
+  opacity 0.65s ease;
   contain: layout style;
   will-change: transform, opacity;
   visibility: hidden;
@@ -223,41 +234,41 @@
   float: right;
 }
 .spl-fullscreen{
-  background-image: url(@maximize);
+  background-image: $maximize;
 }
 .spl-fullscreen.on{
-  background-image: url(@minimize);
+  background-image: $minimize;
 }
 .spl-autofit{
-  background-image: url(@autofit);
+  background-image: $autofit;
 }
 .spl-zoom-out{
-  background-image: url(@zoomout);
+  background-image: $zoomout;
   background-size: 22px;
 }
 .spl-zoom-in{
-  background-image: url(@zoomin);
+  background-image: $zoomin;
   background-size: 22px;
 }
 .spl-download{
-  background-image: url(@download);
+  background-image: $download;
   background-size: 20px;
 }
 .spl-theme{
-  background-image: url(@theme);
+  background-image: $theme;
 }
 .spl-play{
-  background-image: url(@play);
+  background-image: $play;
 }
 .spl-play.on{
-  background-image: url(@pause);
+  background-image: $pause;
   animation: pulsate 1s ease infinite;
 }
 .spl-close{
-  background-image: url(@close);
+  background-image: $close;
 }
 .spl-info{
-  background-image: url(@info);
+  background-image: $info;
 }
 .spl-prev,
 .spl-next{
@@ -273,7 +284,7 @@
   margin-top: -25px;
   transform: translateX(-100px);
   transition: transform 0.35s ease;
-  background-image: url(@arrow);
+  background-image: $arrow;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 30px;
