@@ -1735,22 +1735,3 @@ function setup_page(direction) {
 
     options_onchange && options_onchange(current_slide, options);
 }
-
-export default {
-
-    init: init,
-    theme: theme,
-    fullscreen: fullscreen,
-    download: download,
-    autofit: autofit,
-    next: next,
-    prev: prev,
-    goto: goto,
-    close: close,
-    zoom: zoom,
-    menu: menu,
-    show: show,
-    play: play,
-    addControl: addControl,
-    removeControl: removeControl
-};
