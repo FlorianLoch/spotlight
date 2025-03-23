@@ -435,6 +435,7 @@ function apply_options(anchor) {
   toggle_theme || (options_theme && theme(options_theme));
   options_class && addClass(widget, options_class);
   options_class && prepareStyle(widget);
+  options_close_after_last = parse_option("closeAfterLast", false);
 
   const control = options["control"];
 
@@ -981,10 +982,10 @@ function end(e) {
       if (slidable && dragged) {
         const has_next =
           x < -(viewport_w / 7) &&
-          (current_slide < slide_count || options_infinite);
+          (current_slide < slide_count || options_infinite || options_close_after_last);
         const has_prev =
           has_next ||
-          (x > viewport_w / 7 && (current_slide > 1 || options_infinite));
+          (x > viewport_w / 7 && (current_slide > 1 || options_infinite || options_close_after_last));
 
         if (has_next || has_prev) {
           update_slider(
@@ -993,7 +994,7 @@ function end(e) {
             (x / viewport_w) * 100
           );
 
-          (has_next && next()) || (has_prev && prev());
+          (has_next && next()) || (has_prev  && prev());
         }
 
         if (is_sliding_up && y < -(viewport_h / 4)) {
@@ -1395,6 +1396,8 @@ export function prev(e) {
       update_slider(slide_count, true);
 
       return goto(slide_count);
+    } else if (options_close_after_last) {
+      close();
     }
   }
 }
@@ -1417,6 +1420,8 @@ export function next(e) {
       return goto(1);
     } else if (playing) {
       play();
+    } else if (options_close_after_last) {
+      close();
     }
   }
 }
