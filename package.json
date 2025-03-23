@@ -37,10 +37,12 @@
   },
   "scripts": {
     "build": "vite build",
-    "serve:demo": "serve ."
+    "serve-demo": "serve .",
+    "format": "prettier --write ."
   },
   "readme": "README.md",
   "devDependencies": {
+    "prettier": "^3.5.3",
     "sass": "^1.86.0",
     "serve": "^14.2.4",
     "vite": "^6.2.2",
