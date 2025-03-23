@@ -12,7 +12,7 @@ const tpl_video = /** @type {HTMLVideoElement} */ (createElement("video"));
  * @returns {string}
  */
 
-export default function (anchor, size, options, media) {
+export function parse_src(anchor, size, options, media) {
   let src, diff;
 
   if (media !== "node") {

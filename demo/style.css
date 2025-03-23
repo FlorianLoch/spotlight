@@ -110,7 +110,7 @@ pre code.hljs {
   max-width: calc(100vw - 1.7em);
 }
 
-a[data-media="node"] {
+a[data-spotlightjs-media="node"] {
   width: 29vw;
   max-width: 300px;
   margin: 1vmin 1vmin;
@@ -118,7 +118,7 @@ a[data-media="node"] {
   height: 20vw;
   max-height: 200px;
 }
-a[data-media="node"] img {
+a[data-spotlightjs-media="node"] img {
   float: left;
   width: 33.33%;
   margin: 0;

@@ -31,11 +31,12 @@ import "../css/spotlight.scss";
 
 import { controls, controls_default, keycodes } from "./config.js";
 import widget from "./template.js";
-import parse_src from "./parser.js";
+import { parse_src } from "./parser.js";
 
 const controls_dom = {};
 const connection = navigator["connection"];
 const dpr = window["devicePixelRatio"] || 1;
+const DATA_PREFIX = "spotlightjs";
 
 /** @type {number} */
 let x;
@@ -90,6 +91,7 @@ let options_preload;
 let options_href;
 let options_click;
 let options_class;
+let options_close_after_last;
 let delay;
 
 let animation_scale;
@@ -298,7 +300,8 @@ function dispatch(event) {
 
     for (let i = 0; i < anchors.length; i++) {
       if (anchors[i] === target) {
-        options_group = group && group.dataset;
+        options_group =
+          group && Object.assign({}, group.dataset, get_prefixed_data(group));
         init_gallery(i + 1);
         break;
       }
@@ -368,21 +371,40 @@ function init_gallery(index) {
 
 /**
  * @param {string} key
- * @param {boolean|string|number=} is_default
+ * @param {boolean|string|number=} defaultValue
  */
 
-function parse_option(key, is_default) {
-  //console.log("parse_option", key, is_default);
+function parse_option(key, defaultValue) {
+  const val = options[key];
 
-  let val = options[key];
+  if (val !== undefined) {
+    const sval = String(val);
 
-  if (typeof val !== "undefined") {
-    val = "" + val;
-
-    return val !== "false" && (val || is_default);
+    return sval !== "false" && (sval || defaultValue);
   }
 
-  return is_default;
+  return defaultValue;
+}
+
+function get_prefixed_data(anchor) {
+  const prefixedData = {};
+
+  for (const key in anchor.dataset) {
+    if (key.startsWith(DATA_PREFIX)) {
+      let trimmedKey = key.substring(DATA_PREFIX.length);
+      if (trimmedKey.length === 0) {
+        continue;
+      }
+
+      // Revert the uppercasing performed by JS engines:
+      // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset#in_javascript
+      trimmedKey = trimmedKey[0].toLowerCase() + trimmedKey.substring(1);
+
+      prefixedData[trimmedKey] = anchor.dataset[key];
+    }
+  }
+
+  return prefixedData;
 }
 
 /**
@@ -390,11 +412,12 @@ function parse_option(key, is_default) {
  */
 
 function apply_options(anchor) {
-  //console.log("apply_options", anchor);
-
-  options = {};
-  options_group && Object.assign(options, options_group);
-  Object.assign(options, anchor.dataset || anchor);
+  options = Object.assign(
+    {},
+    options_group,
+    anchor.dataset || anchor,
+    get_prefixed_data(anchor)
+  );
 
   // TODO: theme is icon and option field!
 
@@ -1462,7 +1485,11 @@ function prepare(direction) {
 
   if (options_preload && direction) {
     if ((anchor = anchors[current_slide])) {
-      const options_next = anchor.dataset || anchor;
+      const options_next = Object.assign(
+        {},
+        anchor.dataset || anchor,
+        get_prefixed_data(anchor)
+      );
       const next_media = options_next["media"];
 
       if (!next_media || next_media === "image") {
