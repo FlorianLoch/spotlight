@@ -1,3 +1,5 @@
+// Based on the original LESS code; converted to SCSS and improved.
+
 $preloader: url("../img/preloader.svg?inline");
 $maximize: url("../img/maximize.svg?inline");
 $minimize: url("../img/minimize.svg?inline");
@@ -228,8 +230,9 @@ $info: url("../img/info.svg?inline");
 }
 .spl-page {
   float: left;
-  width: auto;
+  width: auto !important;
   line-height: 50px;
+  padding: 0 10px 0 10px;
 }
 .spl-page ~ * {
   background-position: center;
